@@ -2,7 +2,7 @@
 
 Firefox extension packer for node.js
 
-Nothing big, just to complement https://www.npmjs.com/package/crx and https://www.npmjs.com/package/safariextz
+Nothing big, just to complement [crx](https://www.npmjs.com/package/crx) and [safariextz](https://www.npmjs.com/package/safariextz)
 
 ## Environment Setup
 
