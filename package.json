@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/avast/firefox-xpi/issues"
   },
-  "homepage": "https://github.com/avast/firefox-xpi"
+  "homepage": "https://github.com/avast/firefox-xpi",
+  "dependencies": {
+    "when": "^3.7.2"
+  }
 }
