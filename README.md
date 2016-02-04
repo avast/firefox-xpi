@@ -17,6 +17,6 @@ npm install -D firefox-xpi
 ```
 var xpi = require('firefox-xpi');
 
-xpi(packageName, extensionSrcDir, { sdkPath: firefox_addon_dir });
+xpi(packageName, extensionSrcDir);
 ```
 
