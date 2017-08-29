@@ -1,6 +1,6 @@
 {
   "name": "firefox-xpi",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Firefox extension packer for node.js",
   "main": "index.js",
   "repository": {
@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/avast/firefox-xpi",
   "dependencies": {
+    "del": "^3.0.0",
     "jpm": "1.0.4",
-    "when": "^3.7.2"
+    "when": "^3.7.2",
+    "web-ext": "^2.0.0"
   }
 }
