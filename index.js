@@ -49,18 +49,14 @@
         var webExtModulePath = path.resolve(require.resolve('web-ext/dist/web-ext.js'), '../..');
         var intermediateDir = options && options.tmpDir ? path.resolve(options.tmpDir, 'web-ext-artifacts') : path.resolve(path.dirname(zipName), 'web-ext-artifacts');
 
-        process.argv = [ process.argv[0], path.resolve(webExtModulePath, 'bin/web-ext'), 'build', '--overwrite-dest', '--artifacts-dir=' +  intermediateDir];
+        process.argv = [ process.argv[0], path.resolve(webExtModulePath, 'bin/web-ext'), 'build', '--overwrite-dest', '--artifacts-dir=' +  intermediateDir, "--source-dir=" + addonDir];
 
         var rm = require('del').sync;
         rm(intermediateDir, {force: true});
         
-        var wd = process.cwd();
-        process.chdir(addonDir);
-
         var webExt = require('web-ext/dist/web-ext.js').main;
         return webExt(webExtModulePath)
             .then(function () {
-                process.chdir(wd);
                 var result = fs.readdirSync(intermediateDir)[0];
                 fs.renameSync(path.resolve(intermediateDir, result), zipName);
                 rm(intermediateDir, {force: true});
@@ -69,7 +65,6 @@
             })
             .catch(function (ex) {
                 console.log(ex);
-                process.chdir(wd);
                 return 1;
             });
     }
