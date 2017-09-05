@@ -55,12 +55,14 @@
         rm(intermediateDir, {force: true});
         
         var webExt = require('web-ext/dist/web-ext.js').main;
-        return webExt(webExtModulePath)
-            .then(function () {
+        var init = webExt(webExtModulePath);
+        process.argv = myArgv;
+        init.then(function () {
                 var result = fs.readdirSync(intermediateDir)[0];
                 fs.renameSync(path.resolve(intermediateDir, result), zipName);
                 rm(intermediateDir, {force: true});
                 console.log("WebExtension at " + zipName);
+
                 return 0;
             })
             .catch(function (ex) {
