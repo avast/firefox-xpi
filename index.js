@@ -7,7 +7,6 @@
 (function () {
     'use strict';
 
-    var when = require('when');
     var path = require('path');
     var fs = require('fs');
 
@@ -45,19 +44,20 @@
     }
 
     function packWebExt(zipName, addonDir, options) {
-        var myArgv = process.argv.slice();
-        var webExtModulePath = path.resolve(require.resolve('web-ext/dist/web-ext.js'), '../..');
         var intermediateDir = options && options.tmpDir ? path.resolve(options.tmpDir, 'web-ext-artifacts') : path.resolve(path.dirname(zipName), 'web-ext-artifacts');
 
-        process.argv = [ process.argv[0], path.resolve(webExtModulePath, 'bin/web-ext'), 'build', '--overwrite-dest', '--artifacts-dir=' +  intermediateDir, "--source-dir=" + addonDir];
+        //process.argv = [ process.argv[0], path.resolve(webExtModulePath, 'bin/web-ext'), 'build', '--overwrite-dest', '--artifacts-dir=' +  intermediateDir, "--source-dir=" + addonDir];
 
         var rm = require('del').sync;
         rm(intermediateDir, {force: true});
         
-        var webExt = require('web-ext/dist/web-ext.js').main;
-        var init = webExt(webExtModulePath);
-        process.argv = myArgv;
-        init.then(function () {
+        var webExt = require('web-ext').default.cmd.build;
+        webExt({
+            sourceDir: addonDir,
+            artifactsDir: intermediateDir,
+            overwriteDest: true 
+        })
+            .then(function () {
                 var result = fs.readdirSync(intermediateDir)[0];
                 fs.renameSync(path.resolve(intermediateDir, result), zipName);
                 rm(intermediateDir, {force: true});
